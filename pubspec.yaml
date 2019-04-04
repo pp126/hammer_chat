@@ -1,0 +1,109 @@
+name: hammer_chat
+description: A new Flutter application.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://www.dartlang.org/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+  - images/icn_chat_active.png
+  - images/icn_chat_normal.png
+  - images/icn_discover_active.png
+  - images/icn_discover_normal.png
+  - images/icn_news_active.png
+  - images/icn_news_normal.png
+  - images/icn_video_active.png
+  - images/icn_video_normal.png
+  - images/icn_money_active.png
+  - images/icn_money_normal.png
+
+  - images/standard_personal_center_normal.png
+  - images/standard_more_normal.png
+  - images/standard_cancel_normal.png
+  - images/standard_back_normal.png
+  - images/reward_progress_bar.png
+
+
+  - images/discovery/icon_explore_game.png
+  - images/discovery/icon_explore_moment.png
+  - images/discovery/icon_explore_shop.png
+  - images/discovery/icon_explore_topic.png
+  - images/discovery/icon_explore_tree.png
+  - images/discovery/icon_nearby_discovery.png
+  - images/discovery/icon_novel_color.png
+  - images/discovery/icon_reader_discover.png
+
+  - images/user_center/default_avatar.png
+  - images/user_center/group_list_icon_file.png
+  - images/user_center/icon_account_security.png
+  - images/user_center/icon_chatting.png
+  - images/user_center/icon_money.png
+  - images/user_center/icon_notification.png
+  - images/user_center/icon_personal_favorite.png
+  - images/user_center/icon_setting.png
+  - images/user_center/icon_todo.png
+  - images/user_center/icon_address_book.png
+  - images/user_center/qr_code_normal.png
+  - images/user_center/icon_moments_profile.png
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.io/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.io/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.io/custom-fonts/#from-packages

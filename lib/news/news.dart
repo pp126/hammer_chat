@@ -4,6 +4,8 @@ import 'package:hammer_chat/news/news_tabs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsPage extends StatefulWidget {
+  NewsPage({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return NewsPageState();
@@ -15,29 +17,29 @@ class NewsPageState extends State<NewsPage>
   TabController _controller;
   List<String> _userTabs = List<String>();
 
-  Future<Null> _loadUserTabs() async {
+  Future<List<String>> _loadUserTabs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _userTabs = prefs.getStringList("tabs");
+    _userTabs = prefs.getStringList("news_tabs");
     if (_userTabs == null) {
       _userTabs = List<String>();
     }
     if (_userTabs.length < 1) {
       _userTabs.addAll(allTabs.sublist(0, 8));
       prefs.setStringList("news_tabs", _userTabs);
+//      _userTabs.insert(0, "推荐");
     }
-
-    _userTabs.insert(0, "推荐");
-    setState(() {
-      _controller = TabController(vsync: this, length: _userTabs.length);
-      _userTabs;
-    });
   }
 
   @override
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: _userTabs.length);
-    _loadUserTabs();
+    _loadUserTabs().then((listValue) {
+      setState(() {
+        _controller = TabController(vsync: this, length: _userTabs.length);
+        _userTabs;
+      });
+    });
   }
 
   @override
@@ -49,13 +51,23 @@ class NewsPageState extends State<NewsPage>
           _tab(),
           Divider(
             color: Colors.grey,
-          )
+          ),
+          Expanded(child: _content()),
         ],
       ),
     );
   }
 
   Widget _tab() {
+    List<Tab> tabs = _userTabs.map((String title) {
+      return Tab(
+        text: title,
+      );
+    }).toList();
+    tabs.add(Tab(
+      text: "       ",
+    ));
+
     return Stack(
       children: <Widget>[
         TabBar(
@@ -65,11 +77,7 @@ class NewsPageState extends State<NewsPage>
           unselectedLabelColor: Colors.black87,
           labelColor: Colors.blue,
           indicator: BoxDecoration(),
-          tabs: _userTabs.map((String title) {
-            return Tab(
-              text: title,
-            );
-          }).toList(),
+          tabs: tabs,
         ),
         Center(
           child: Align(
@@ -101,6 +109,20 @@ class NewsPageState extends State<NewsPage>
     );
   }
 
+  Widget _content() {
+    return TabBarView(
+        controller: _controller,
+        children: _userTabs.map((String title) {
+          return Container();
+        }).toList());
+  }
+
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    _loadUserTabs();
+  }
 }

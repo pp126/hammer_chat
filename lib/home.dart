@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hammer_chat/assets/icons.dart';
 import 'package:hammer_chat/chat.dart';
 import 'package:hammer_chat/discovery.dart';
 import 'package:hammer_chat/money.dart';
-import 'package:hammer_chat/news.dart';
+import 'package:hammer_chat/news/news.dart';
 import 'package:hammer_chat/user_center.dart';
 import 'package:hammer_chat/video.dart';
 
@@ -36,32 +38,9 @@ class HomePageState extends State<HomePage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.push<void>(
-              context,
-              MaterialPageRoute<void>(
-                  builder: (BuildContext context) => UserCenterPage()),
-            );
-          },
-          child: Container(
-            padding: EdgeInsets.all(4),
-            width: 18,
-            height: 18,
-            child: Image(
-                fit: BoxFit.cover,
-                image:
-                    AssetImage("images/standard_personal_center_normal.png")),
-          ),
-        ),
         title: _createTitle(),
         centerTitle: true,
         actions: <Widget>[
-          Image(
-              width: 36,
-              height: 36,
-              fit: BoxFit.contain,
-              image: AssetImage("images/reward_progress_bar.png")),
           PopupMenuButton<String>(
             offset: Offset(0, 100),
             child: Image(
@@ -69,39 +48,91 @@ class HomePageState extends State<HomePage>
                 height: 46,
                 fit: BoxFit.contain,
                 image: AssetImage("images/standard_more_normal.png")),
-            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                  PopupMenuItem<String>(
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.location_on),
-                          Text("添加好友/群")
-                        ],
-                      ),
+            itemBuilder: (BuildContext context) =>
+            <PopupMenuItem<String>>[
+              PopupMenuItem<String>(
+                child: Row(
+                  children: <Widget>[
+                    ImageIcon(
+                      AssetImage(titlebar_menu_icon_addfriend),
+                      size: 18,
                     ),
-                  ),
-                  PopupMenuItem<String>(
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.location_on),
-                          Text("创建群聊")
-                        ],
-                      ),
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "添加好友/群",
+                          style: TextStyle(fontSize: 13),
+                        )),
+                  ],
+                ),
+              ),
+              PopupMenuItem<String>(
+                child: Row(
+                  children: <Widget>[
+                    ImageIcon(
+                      AssetImage(titlebar_menu_icon_group),
+                      size: 18,
                     ),
-                  ),
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "创建群聊",
+                          style: TextStyle(fontSize: 13),
+                        )),
+                  ],
+                ),
+              ),
+              PopupMenuItem<String>(
+                child: Row(
+                  children: <Widget>[
+                    ImageIcon(
+                      AssetImage(titlebar_menu_icon_flicking),
+                      size: 18,
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "扫二维码",
+                          style: TextStyle(fontSize: 13),
+                        )),
+                  ],
+                ),
+              ),
 
-                  PopupMenuItem<String>(
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.location_on),
-                          Text("添加好友")
-                        ],
-                      ),
+              PopupMenuItem<String>(
+                child: Row(
+                  children: <Widget>[
+                    ImageIcon(
+                      AssetImage(titlebar_menu_icon_paycode),
+                      size: 18,
                     ),
-                  ),
-                ],
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "扫码支付",
+                          style: TextStyle(fontSize: 13),
+                        )),
+                  ],
+                ),
+              ),
+
+              PopupMenuItem<String>(
+                child: Row(
+                  children: <Widget>[
+                    ImageIcon(
+                      AssetImage(titlebar_menu_icon_personal),
+                      size: 18,
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "通讯录",
+                          style: TextStyle(fontSize: 13),
+                        )),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -140,15 +171,16 @@ class HomePageState extends State<HomePage>
                 text: '视频',
                 iconselet: "images/icn_video_active.png"),
             _Tab(index == 4,
-                icon: "images/icn_money_normal.png",
-                text: '领钱',
-                iconselet: "images/icn_money_active.png"),
+                icon: icn_me_normal,
+                text: '我的',
+                iconselet: icn_me_active),
           ],
         ));
   }
 
   Widget _pages() {
     return TabBarView(
+        dragStartBehavior:DragStartBehavior.start,
         physics: NeverScrollableScrollPhysics(),
         controller: _controller,
         children: <Widget>[
@@ -156,7 +188,7 @@ class HomePageState extends State<HomePage>
           DiscoveryPage(),
           NewsPage(),
           VideoPage(),
-          MoneyPage()
+          UserCenterPage()
         ]);
   }
 
@@ -178,7 +210,7 @@ class HomePageState extends State<HomePage>
         title = "视频";
         break;
       case 4:
-        title = "领钱";
+        title = "我的";
         break;
     }
     return Text(

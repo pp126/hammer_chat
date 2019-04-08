@@ -8,7 +8,7 @@ class DiscoveryPage extends StatefulWidget {
   }
 }
 
-class DiscoveryPageState extends State<DiscoveryPage> {
+class DiscoveryPageState extends State<DiscoveryPage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,4 +74,7 @@ class DiscoveryPageState extends State<DiscoveryPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

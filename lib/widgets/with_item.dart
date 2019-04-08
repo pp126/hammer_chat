@@ -48,7 +48,9 @@ class WithItemWidget extends StatelessWidget {
 
   Widget _createImg() {
     if (imgRight == null) {
-      return Container();
+      return Expanded(
+        child: Container(),
+      );
     }
     return Expanded(
         child: Align(

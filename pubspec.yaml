@@ -23,6 +23,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.1+2
 
 dev_dependencies:
   flutter_test:
@@ -52,13 +53,14 @@ flutter:
   - images/icn_video_normal.png
   - images/icn_money_active.png
   - images/icn_money_normal.png
+  - images/icn_me_normal.png
+  - images/icn_me_active.png
 
   - images/standard_personal_center_normal.png
   - images/standard_more_normal.png
   - images/standard_cancel_normal.png
   - images/standard_back_normal.png
   - images/reward_progress_bar.png
-
 
   - images/discovery/icon_explore_game.png
   - images/discovery/icon_explore_moment.png
@@ -81,6 +83,13 @@ flutter:
   - images/user_center/icon_address_book.png
   - images/user_center/qr_code_normal.png
   - images/user_center/icon_moments_profile.png
+  - images/user_center/icon_money_profile.png
+
+  - images/menu/titlebar_menu_icon_addfriend.png
+  - images/menu/titlebar_menu_icon_flicking.png
+  - images/menu/titlebar_menu_icon_group.png
+  - images/menu/titlebar_menu_icon_paycode.png
+  - images/menu/titlebar_menu_icon_personal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -7,9 +7,12 @@ class VideoPage extends StatefulWidget {
   }
 }
 
-class VideoPageState extends State<VideoPage> {
+class VideoPageState extends State<VideoPage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Container(color: Colors.blueGrey[50],);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

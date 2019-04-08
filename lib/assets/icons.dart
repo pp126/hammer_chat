@@ -1,0 +1,9 @@
+const String titlebar_menu_icon_addfriend = "images/menu/titlebar_menu_icon_addfriend.png";
+const String titlebar_menu_icon_flicking = "images/menu/titlebar_menu_icon_flicking.png";
+const String titlebar_menu_icon_group = "images/menu/titlebar_menu_icon_group.png";
+const String titlebar_menu_icon_paycode = "images/menu/titlebar_menu_icon_paycode.png";
+const String titlebar_menu_icon_personal = "images/menu/titlebar_menu_icon_personal.png";
+const String icon_money_profile = "images/user_center/icon_money_profile.png";
+const String standard_back_normal = "images/standard_back_normal.png";
+const String icn_me_normal = "images/icn_me_normal.png";
+const String icn_me_active = "images/icn_me_active.png";

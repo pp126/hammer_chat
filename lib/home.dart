@@ -6,7 +6,9 @@ import 'package:hammer_chat/discovery.dart';
 import 'package:hammer_chat/money.dart';
 import 'package:hammer_chat/news/news.dart';
 import 'package:hammer_chat/user_center.dart';
-import 'package:hammer_chat/video.dart';
+import 'package:hammer_chat/video/anim.dart';
+import 'package:hammer_chat/video/short_video.dart';
+import 'package:hammer_chat/video/video.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   int index = 0;
+  bool shortVideo = false;
 
   @override
   void initState() {
@@ -48,91 +51,88 @@ class HomePageState extends State<HomePage>
                 height: 46,
                 fit: BoxFit.contain,
                 image: AssetImage("images/standard_more_normal.png")),
-            itemBuilder: (BuildContext context) =>
-            <PopupMenuItem<String>>[
-              PopupMenuItem<String>(
-                child: Row(
-                  children: <Widget>[
-                    ImageIcon(
-                      AssetImage(titlebar_menu_icon_addfriend),
-                      size: 18,
+            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                  PopupMenuItem<String>(
+                    child: Row(
+                      children: <Widget>[
+                        ImageIcon(
+                          AssetImage(titlebar_menu_icon_addfriend),
+                          size: 18,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "添加好友/群",
+                              style: TextStyle(fontSize: 13),
+                            )),
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "添加好友/群",
-                          style: TextStyle(fontSize: 13),
-                        )),
-                  ],
-                ),
-              ),
-              PopupMenuItem<String>(
-                child: Row(
-                  children: <Widget>[
-                    ImageIcon(
-                      AssetImage(titlebar_menu_icon_group),
-                      size: 18,
+                  ),
+                  PopupMenuItem<String>(
+                    child: Row(
+                      children: <Widget>[
+                        ImageIcon(
+                          AssetImage(titlebar_menu_icon_group),
+                          size: 18,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "创建群聊",
+                              style: TextStyle(fontSize: 13),
+                            )),
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "创建群聊",
-                          style: TextStyle(fontSize: 13),
-                        )),
-                  ],
-                ),
-              ),
-              PopupMenuItem<String>(
-                child: Row(
-                  children: <Widget>[
-                    ImageIcon(
-                      AssetImage(titlebar_menu_icon_flicking),
-                      size: 18,
+                  ),
+                  PopupMenuItem<String>(
+                    child: Row(
+                      children: <Widget>[
+                        ImageIcon(
+                          AssetImage(titlebar_menu_icon_flicking),
+                          size: 18,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "扫二维码",
+                              style: TextStyle(fontSize: 13),
+                            )),
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "扫二维码",
-                          style: TextStyle(fontSize: 13),
-                        )),
-                  ],
-                ),
-              ),
-
-              PopupMenuItem<String>(
-                child: Row(
-                  children: <Widget>[
-                    ImageIcon(
-                      AssetImage(titlebar_menu_icon_paycode),
-                      size: 18,
+                  ),
+                  PopupMenuItem<String>(
+                    child: Row(
+                      children: <Widget>[
+                        ImageIcon(
+                          AssetImage(titlebar_menu_icon_paycode),
+                          size: 18,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "扫码支付",
+                              style: TextStyle(fontSize: 13),
+                            )),
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "扫码支付",
-                          style: TextStyle(fontSize: 13),
-                        )),
-                  ],
-                ),
-              ),
-
-              PopupMenuItem<String>(
-                child: Row(
-                  children: <Widget>[
-                    ImageIcon(
-                      AssetImage(titlebar_menu_icon_personal),
-                      size: 18,
+                  ),
+                  PopupMenuItem<String>(
+                    child: Row(
+                      children: <Widget>[
+                        ImageIcon(
+                          AssetImage(titlebar_menu_icon_personal),
+                          size: 18,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "通讯录",
+                              style: TextStyle(fontSize: 13),
+                            )),
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "通讯录",
-                          style: TextStyle(fontSize: 13),
-                        )),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
           ),
         ],
       ),
@@ -171,23 +171,21 @@ class HomePageState extends State<HomePage>
                 text: '视频',
                 iconselet: "images/icn_video_active.png"),
             _Tab(index == 4,
-                icon: icn_me_normal,
-                text: '我的',
-                iconselet: icn_me_active),
+                icon: icn_me_normal, text: '我的', iconselet: icn_me_active),
           ],
         ));
   }
 
   Widget _pages() {
     return TabBarView(
-        dragStartBehavior:DragStartBehavior.start,
+        dragStartBehavior: DragStartBehavior.start,
         physics: NeverScrollableScrollPhysics(),
         controller: _controller,
         children: <Widget>[
           ChatPage(),
           DiscoveryPage(),
           NewsPage(),
-          VideoPage(),
+          shortVideo ? ShortVideoPage() : VideoPage(),
           UserCenterPage()
         ]);
   }
@@ -207,7 +205,7 @@ class HomePageState extends State<HomePage>
         title = "新闻";
         break;
       case 3:
-        title = "视频";
+        return MyAnimation(shortVideo, _videoTabChanged);
         break;
       case 4:
         title = "我的";
@@ -217,6 +215,12 @@ class HomePageState extends State<HomePage>
       title,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
     );
+  }
+
+  _videoTabChanged(bool changed) {
+    setState(() {
+      shortVideo = changed;
+    });
   }
 }
 

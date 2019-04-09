@@ -8,3 +8,4 @@ const Color white99 = Color(0x99ffffff);
 const Color whitebb = Color(0xbbffffff);
 const Color whitedd = Color(0xddffffff);
 const Color whiteff = Color(0xffffffff);
+const Color kBlue = Color(0x4490CAF9);

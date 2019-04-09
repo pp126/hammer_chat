@@ -3,7 +3,9 @@ import 'package:hammer_chat/assets/icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsTabsPage extends StatefulWidget {
-  NewsTabsPage({Key key}) : super(key: key);
+  NewsTabsPage(this.type, {Key key}) : super(key: key);
+
+  int type;
 
   @override
   State<StatefulWidget> createState() {
@@ -155,7 +157,7 @@ class NewsTabsPageState extends State<NewsTabsPage> {
 
   Widget _part4() {
     all = List<String>();
-    all.addAll(allTabs);
+    all.addAll(widget.type == 0 ? newsTabs : videoTabs);
 //    all.remove("推荐");
     for (int i = 0; i < _userTabs.length; i++) {
       all.remove(_userTabs[i]);
@@ -218,7 +220,9 @@ class NewsTabsPageState extends State<NewsTabsPage> {
 
   void _loadUserTabs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _userTabs = prefs.getStringList("news_tabs");
+    _userTabs = widget.type == 0
+        ? prefs.getStringList("news_tabs")
+        : prefs.getStringList("video_tabs");
     if (_userTabs == null) {
       _userTabs = List<String>();
     }
@@ -236,7 +240,7 @@ class NewsTabsPageState extends State<NewsTabsPage> {
   }
 }
 
-const List<String> allTabs = <String>[
+const List<String> newsTabs = <String>[
   "推荐",
   "房产",
   "股票",
@@ -260,4 +264,38 @@ const List<String> allTabs = <String>[
   "旅游",
   "电影",
   "视频"
+];
+
+const List<String> videoTabs = <String>[
+  "推荐",
+  "娱乐",
+  "体育",
+  "汽车",
+  "股票",
+  "星座",
+  "养生",
+  "图片",
+  "美食",
+  "房产",
+  "游戏",
+  "财经",
+  "宠物",
+  "音乐",
+  "影视",
+  "搞笑",
+  "科技",
+  "娱乐",
+  "社会",
+  "综艺",
+  "农人",
+  "儿童",
+  "懂车帝",
+  "文化",
+  "时尚",
+  "金秒奖",
+  "亲子",
+  "手工",
+  "开眼",
+  "广场舞",
+  "小视频",
 ];

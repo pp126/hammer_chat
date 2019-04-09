@@ -1,32 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:hammer_chat/assets/colors.dart';
-import 'package:hammer_chat/news/news_list.dart';
 import 'package:hammer_chat/news/news_tabs.dart';
+import 'package:hammer_chat/video/video_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NewsPage extends StatefulWidget {
-  NewsPage({Key key}) : super(key: key);
-
+class VideoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return NewsPageState();
+    return VideoPageState();
   }
 }
 
-class NewsPageState extends State<NewsPage>
+class VideoPageState extends State<VideoPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    return VideoList();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class VideoList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return VideoListState();
+  }
+}
+
+class VideoListState extends State<VideoList>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _controller;
   List<String> _userTabs = List<String>();
 
   Future<List<String>> _loadUserTabs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _userTabs = prefs.getStringList("news_tabs");
+    _userTabs = prefs.getStringList("video_tabs");
     if (_userTabs == null) {
       _userTabs = List<String>();
     }
     if (_userTabs.length < 1) {
-      _userTabs.addAll(newsTabs.sublist(0, 8));
-      prefs.setStringList("news_tabs", _userTabs);
+      _userTabs.addAll(videoTabs.sublist(0, 8));
+      prefs.setStringList("video_tabs", _userTabs);
     }
   }
 
@@ -95,7 +111,7 @@ class NewsPageState extends State<NewsPage>
                     Navigator.push<void>(
                       context,
                       MaterialPageRoute<void>(
-                          builder: (BuildContext context) => NewsTabsPage(0)),
+                          builder: (BuildContext context) => NewsTabsPage(1)),
                     );
                   },
                   icon: Icon(
@@ -113,12 +129,12 @@ class NewsPageState extends State<NewsPage>
     return TabBarView(
         controller: _controller,
         children: _userTabs.map((String title) {
-          return NewsListPage(title);
+          return VideoListPage(title);
         }).toList());
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   void deactivate() {

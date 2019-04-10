@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hammer_chat/bean/short_video_bean.dart';
 import 'package:video_player/video_player.dart';
+import 'package:event_bus/event_bus.dart';
 
 class ShortVideoDetailPage extends StatefulWidget {
   ShortVideoDetailPage(this._videoBean, this.index);
@@ -11,7 +12,7 @@ class ShortVideoDetailPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+//    SystemChrome.setEnabledSystemUIOverlays([]);
     return ShortVideoDetailState();
   }
 }
@@ -19,17 +20,54 @@ class ShortVideoDetailPage extends StatefulWidget {
 class ShortVideoDetailState extends State<ShortVideoDetailPage> {
   VideoPlayerController _controller;
   PageController pageController;
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        PageView.builder(
+            onPageChanged: (int index) {
+              currentPage = index;
+            },
+            scrollDirection: Axis.vertical,
+            controller: pageController,
+            itemCount: widget._videoBean.returnData.records.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  child: Video(
+                      widget._videoBean.returnData.records[index].videoUrl,
+                      index));
+            }),
+        GestureDetector(
+          child: Container(
+            padding: EdgeInsets.all(3),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(50)),
+            margin: EdgeInsets.all(30),
+            child: Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
+          ),
+          onTap: () {
+            print(Navigator.pop(context));
+          },
+        )
+      ],
+    );
     return PageView.builder(
+        onPageChanged: (int index) {
+          currentPage = index;
+        },
         scrollDirection: Axis.vertical,
         controller: pageController,
         itemCount: widget._videoBean.returnData.records.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            child: Video(widget._videoBean.returnData.records[index].videoUrl)
-          );
+              child: Video(
+                  widget._videoBean.returnData.records[index].videoUrl, index));
         });
   }
 
@@ -38,7 +76,10 @@ class ShortVideoDetailState extends State<ShortVideoDetailPage> {
     super.initState();
     pageController = PageController();
     pageController.addListener(() {
-      print(_controller.textureId);
+      if (pageController.page == currentPage.toDouble()) {
+        print("页面切换");
+        eventBus.fire(0);
+      }
     });
   }
 
@@ -49,15 +90,18 @@ class ShortVideoDetailState extends State<ShortVideoDetailPage> {
 }
 
 class Video extends StatefulWidget {
-  Video(this.url);
+  Video(this.url, this.index);
 
   String url;
+  int index;
 
   @override
   State<StatefulWidget> createState() {
     return VideoState();
   }
 }
+
+EventBus eventBus = EventBus();
 
 class VideoState extends State<Video> {
   VideoPlayerController _controller;
@@ -72,12 +116,14 @@ class VideoState extends State<Video> {
     super.initState();
     _controller = VideoPlayerController.network(widget.url)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          _controller.play();
-        });
+        setState(() {});
       });
     _controller.setLooping(true);
+    eventBus.on<int>().listen((event) {
+      setState(() {
+        _controller.play();
+      });
+    });
   }
 
   @override
@@ -87,5 +133,4 @@ class VideoState extends State<Video> {
     _controller.dispose();
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
-
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hammer_chat/assets/colors.dart';
-import 'package:hammer_chat/news/news_list.dart';
+//import 'package:hammer_chat/news/news_list.dart';
 import 'package:hammer_chat/news/news_tabs.dart';
+import 'package:hammer_chat/news/open_news_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsPage extends StatefulWidget {

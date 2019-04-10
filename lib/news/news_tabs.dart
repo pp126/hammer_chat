@@ -214,8 +214,8 @@ class NewsTabsPageState extends State<NewsTabsPage> {
 
   void _saveTabs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-//    _userTabs.remove("推荐");
-    prefs.setStringList("news_tabs", _userTabs);
+    prefs.setStringList(
+        widget.type == 0 ? "news_tabs" : "video_tabs", _userTabs);
   }
 
   void _loadUserTabs() async {
@@ -227,7 +227,6 @@ class NewsTabsPageState extends State<NewsTabsPage> {
       _userTabs = List<String>();
     }
 
-//    _userTabs.insert(0, "推荐");
     setState(() {
       _userTabs;
     });

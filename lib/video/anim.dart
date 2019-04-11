@@ -23,7 +23,7 @@ class _AnimationSampleState extends State<MyAnimation>
   void initState() {
     super.initState();
     controller = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
     CurvedAnimation curve =
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
     animation = Tween<Alignment>(
